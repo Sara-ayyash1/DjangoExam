@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="header-container">
+        <p>
+          Welcome,
+          <strong>{{loginuser.first_name}} {{loginuser.last_name}}</strong>!
+        </p>
+        <div class="user-nav">
+          <a href="//dashboard" class="btn-back">Go to dashboard</a> |
+          <a href="/logout" class="btn-logout">Logout</a>
+        </div>
+      </div>
+    </header>
+    <div class="container detail-container">
+      <section class="player-info">
+        <h2>USer info</h2>
+        <p>Name : {{user.first_name}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>DOB: {{user.birthday}}</p>
+      </section>
+
+      <div class="user-lovers">
+        <h2>Favorite Games</h2>
+        <table class="lovers-list">
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>Game</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for game in user.liked_games.all %}
+            <tr>
+              <td>{{game.id}}</td>
+              <td>{{game.name}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              No game yet.
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

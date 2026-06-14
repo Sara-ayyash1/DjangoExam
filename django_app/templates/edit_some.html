@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Game </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <p>Welcome, <strong>{{user.first_name}} {{user.last_name}}</strong>!</p>
+            <div class="user-nav">
+                <a href="//dashboard" class="btn-back">Go to </a> | 
+                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container detail-container">
+        <section class="model-info">
+            {% if messages %}
+            <div class="alert-messages">
+                {% for msg in messages %}
+                    <p class="{{msg.tags}}">{{msg}}</p>
+                {% endfor %}
+            </div>
+           {% endif %}
+                <form class="form-group" action="//{{.id}}/update" method="post" class="edit-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{user.id}}">
+                    <label for="name"> Name</label>
+                    <input type="text" name="name" id="name" value="{{.name}}" required>
+
+
+                    <label for="release_date">release_date</label>
+                    <input type="date" name="release_date" id="release_date" value="{{.release_date|date:'Y-m-d'}}">
+
+                    <label for="description">description</label>
+                    <textarea name="description" id="description" >{{.description}}</textarea>               
+                    
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-update">Applay</button>
+                        <a href="//{{.id}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Cancel</a>
+                    </div>
+                </form>
+        </section>
+
+    </div>  
+</body>
+</html>

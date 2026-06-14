@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="avatar">
+                    {{user.first_name|slice:":1"}}{{user.last_name|slice:":1"}}
+                </div>
+                <span class="header-welcome">
+                    Welcome, <strong>{{user.first_name}} {{user.last_name}}</strong>
+                </span>
+            </div>
+            <div class="user-nav">
+                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ── Form Card ── -->
+        <div class="form-card">
+            <h2>Add new </h2>
+
+            {% if messages %}
+            <div class="alert-messages">
+                {% for msg in messages %}
+                    <p class="{{msg.tags}}">{{msg}}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form action="//add_/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{user.id}}">
+
+                <div class="form-group">
+                    <label for="name"> Name</label>
+                    <input type="text" name="name" id="name" placeholder="e.g. God of War" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="release_date">Release Date</label>
+                    <input type="date" name="release_date" id="release_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" placeholder="Write a short description..."></textarea>
+                </div>
+
+                <button class="btn-create" type="submit">
+                    <i class="fa-solid fa-plus"></i> Create 
+                </button>
+            </form>
+        </div>
+
+        <!-- ── Table Card ── -->
+        <div class="table-card">
+            <div class="table-header">
+                <h2>All </h2>
+                <span class="count-badge">{{all_|length}} books</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Game
+                            <span class="sort-icons">
+                                <a href="?sort=name&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=name&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </th>
+                        <th>
+                            Release Date
+                            <span class="sort-icons">
+                                <a href="?sort=release_date&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=release_date&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for  in all_ %}
+                        <tr>
+                            <td><a href="//{{.id}}">{{.name}}</a></td>
+                            <td><span class="genre-badge">{{}}</span></td>
+                            <td><span class="date-text">{{.release_date|date:"d M Y"}}</span></td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="no-data">No  yet — add your first one!</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
