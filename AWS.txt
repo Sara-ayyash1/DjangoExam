@@ -24,8 +24,8 @@
     1- Go to the Git Bash , run the deactivate
     2- cd /c/Users/MH/Downloads/pem
     3- run the command that was in the connect
-        chmod 400 "PemKey_GameProject.pem"
-        ssh -i "PemKey_GameProject.pem" ubuntu@ec2-13-60-248-132.eu-north-1.compute.amazonaws.com
+       => chmod 400 "PemKey_GameProject.pem"
+       => ssh -i "PemKey_GameProject.pem" ubuntu@ec2-13-60-248-132.eu-north-1.compute.amazonaws.com
 
 #==========================================Here...
 
