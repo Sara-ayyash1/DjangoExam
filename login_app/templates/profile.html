@@ -26,7 +26,7 @@
         <h2>Player info</h2>
         <p>Name : {{user.first_name}}</p>
         <p>Email: {{user.email}}</p>
-        <p>DOB: {{user.birthday}}</p>
+        <p>DOB: {{user.birthday|date:"d/m/Y"}}</p>
       </section>
 
       <div class="user-lovers">
