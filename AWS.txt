@@ -24,8 +24,8 @@
     1- Go to the Git Bash , run the deactivate
     2- cd /c/Users/MH/Downloads/pem
     3- run the command that was in the connect
-       => chmod 400 "PemKey_GameProject.pem"
-       => ssh -i "PemKey_GameProject.pem" ubuntu@ec2-13-60-248-132.eu-north-1.compute.amazonaws.com
+       => chmod 400 "MYDjangoExamKey.pem"
+       => ssh -i "MYDjangoExamKey.pem" ubuntu@ec2-13-51-13-77.eu-north-1.compute.amazonaws.com
 
 #==========================================Here...
 
@@ -48,7 +48,7 @@
             # modify these lines with press i =>and to Save and quit. (esc, :wq, enter)
                 import os
 	        	DEBUG = False
-                ALLOWED_HOSTS = ['13.60.248.132']    # keep the quotes!
+                ALLOWED_HOSTS = ['13.51.13.77']    # keep the quotes!
                 STATIC_ROOT = os.path.join(BASE_DIR, "static/")    # add this line at the bottom; don't replace any existing lines!
     3- (venv) ubuntu@54.162.31.253:~/myRepoName/projectName$ cd ..
     4- (venv) ubuntu@54.162.31.253:~myRepoName$ python manage.py collectstatic    # type yes when prompted
@@ -84,7 +84,7 @@
     1- ubuntu@54.162.31.253:~$ sudo vim /etc/nginx/sites-available/django_project
         server {
             listen 80;
-            server_name 13.60.248.132;
+            server_name 13.51.13.77;
             location = /favicon.ico { access_log off; log_not_found off; }
             location /static/ {
                 root /home/ubuntu/DjangoExam;
@@ -134,7 +134,7 @@ sudo service nginx restart
 
 #Access Project
 
-http://{{yourEC2.public.ip}}
+http://13.51.13.77
 
 #==========================================
 
