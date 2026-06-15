@@ -163,6 +163,7 @@ body {
     border: 1px solid #bcf0da;
 }
 
+
 /* شاشات الموبايل (تحويل الأعمدة لصف متتالي) */
 @media (max-width: 768px) {
     .auth-container {

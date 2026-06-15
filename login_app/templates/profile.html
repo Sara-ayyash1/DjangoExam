@@ -6,6 +6,7 @@
     <title>Profile</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
     <header class="main-header">
@@ -15,14 +16,14 @@
           <strong>{{loginuser.first_name}} {{loginuser.last_name}}</strong>!
         </p>
         <div class="user-nav">
-          <a href="//dashboard" class="btn-back">Go to dashboard</a> |
+          <a href="/game/dashboard" class="btn-back">Go to dashboard</a> |
           <a href="/logout" class="btn-logout">Logout</a>
         </div>
       </div>
     </header>
     <div class="container detail-container">
       <section class="player-info">
-        <h2>USer info</h2>
+        <h2>Player info</h2>
         <p>Name : {{user.first_name}}</p>
         <p>Email: {{user.email}}</p>
         <p>DOB: {{user.birthday}}</p>
@@ -33,12 +34,22 @@
         <table class="lovers-list">
           <thead>
             <tr>
-              <td>ID</td>
-              <td>Game</td>
+              <td> ID
+                  <span class="sort-icons">
+                      <a href="?sort=id&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                      <a href="?sort=id&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                  </span>
+              </td>
+              <td>Game
+                  <span class="sort-icons">
+                      <a href="?sort=name&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                      <a href="?sort=name&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                  </span>
+              </td>
             </tr>
           </thead>
           <tbody>
-            {% for game in user.liked_games.all %}
+            {% for game in liked_games %}
             <tr>
               <td>{{game.id}}</td>
               <td>{{game.name}}</td>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Game Info</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <p>Welcome, <strong>{{user.first_name}} {{user.last_name}}</strong>!</p>
+            <div class="user-nav">
+               <a href="/game/dashboard" class="btn-back">Go to Games </a> | 
+                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container detail-container">
+          <section class="game-info">
+            {% if messages %}
+            <div class="alert-messages">
+                {% for msg in messages %}
+                    <p class="{{msg.tags}}">{{msg}}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+                <p> Name : {{game.name}}</p>
+                 <p> Genre : {{game.genre}}</p>
+                <p class="game-desc"><strong>Description:</strong> {{game.description}}</p>
+                <p>Created by : {{game.created_by.first_name}} {{game.created_by.last_name}}</p>
+            {% if game.created_by.id == user.id %}                        
+                <div class="action-buttons">
+                    <a href="/game/{{game.id}}/edit" class="btn btn-update">Update</a>
+                    <form action="/game/{{game.id}}/delete" method="post" style="display:inline">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete" onclick="return confirm('Are you sure?')" class="btn btn-delete">
+                </form> 
+            </div>
+            {% endif %}
+             {% if user not in game.players_how_likes.all %}
+             <form action="/game/{{game.id}}/favorite" class="add-to-fav-box" style="margin-top: 50px;" method="post">
+                {% csrf_token %}
+                    <label for="rate">Rate</label>
+                    <select name="rate" id="rate" required style="width: 50%;">
+                        <option disabled >Rate</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Add to Favorites" >
+             </form>
+            {% endif %}
+           <div style="margin-top: 50px;">
+             {% if  user  in game.players_how_likes.all %}
+                 <a  class="btn-delete" href="/game/{{game.id}}/unfavorite" class="link-unfavorite">Un-Favorite</a>
+            {% endif %}
+           </div>
+        </section>
+
+           <section class="game-lovers">
+            <h2>The Players Who Like This Game</h2>
+            <table class="lovers-list">
+                <thead>
+                    <tr>
+                        <td> ID
+                            <span class="sort-icons">
+                                <a href="?sort=id&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=id&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </td>
+                        <td>Player Name
+                            <span class="sort-icons">
+                                <a href="?sort=user&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=user&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </td>
+                        <td>rate
+                            <span class="sort-icons">
+                                <a href="?sort=rate&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=rate&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for like in userlikes %}
+                        <tr>
+                            <td>{{like.user.id}}</td>
+                            <td><a href="/profile/{{like.user.id}}">{{like.user.first_name}} {{like.user.last_name}}</a></td>
+                            <td>{{like.rate}}</td>
+                        </tr>
+                        {% empty %}
+                            <tr><td colspan="3">No users like this Game yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </section>
+    </div>  
+</body>
+</html>

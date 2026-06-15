@@ -30,7 +30,7 @@
 
         <!-- ── Form Card ── -->
         <div class="form-card">
-            <h2>Add new </h2>
+            <h2>Add new Game</h2>
 
             {% if messages %}
             <div class="alert-messages">
@@ -40,13 +40,25 @@
             </div>
             {% endif %}
 
-            <form action="//add_/" method="post">
+            <form action="/game/add_game/" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="user_id" value="{{user.id}}">
 
                 <div class="form-group">
                     <label for="name"> Name</label>
                     <input type="text" name="name" id="name" placeholder="e.g. God of War" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="genre">Genre</label>
+                     <select name="genre" id="genre">
+                        <option value="Action">Action</option>
+                        <option value="RGP">RGP</option>
+                        <option value="Arcade">Arcade</option>
+                        <option value="Strategy">Strategy</option>
+                        <option value="Tactical shooter">Tactical shooter</option>
+                        <option value="Adventure">Adventure</option>
+                     </select>
                 </div>
 
 
@@ -57,7 +69,7 @@
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" placeholder="Write a short description..."></textarea>
+                    <textarea required name="description" id="description" placeholder="Write a short description..."></textarea>
                 </div>
 
                 <button class="btn-create" type="submit">
@@ -69,8 +81,8 @@
         <!-- ── Table Card ── -->
         <div class="table-card">
             <div class="table-header">
-                <h2>All </h2>
-                <span class="count-badge">{{all_|length}} books</span>
+                <h2>All Games</h2>
+                <span class="count-badge">{{all_games|length}} Games</span>
             </div>
 
             <table>
@@ -84,6 +96,13 @@
                             </span>
                         </th>
                         <th>
+                            Genre
+                            <span class="sort-icons">
+                                <a href="?sort=genre&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
+                                <a href="?sort=genre&dir=desc"><i class="fa-solid fa-arrow-down"></i></a>
+                            </span>
+                        </th>
+                        <th>
                             Release Date
                             <span class="sort-icons">
                                 <a href="?sort=release_date&dir=asc"><i class="fa-solid fa-arrow-up"></i></a>
@@ -93,15 +112,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for  in all_ %}
+                    {% for game in all_games %}
                         <tr>
-                            <td><a href="//{{.id}}">{{.name}}</a></td>
-                            <td><span class="genre-badge">{{}}</span></td>
-                            <td><span class="date-text">{{.release_date|date:"d M Y"}}</span></td>
+                            <td><a href="/game/{{game.id}}">{{game.name}}</a></td>
+                            <td><span class="">{{game.genre}}</span></td>
+                            <td><span class="date-text">{{game.release_date|date:"d M Y"}}</span></td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="no-data">No  yet — add your first one!</td>
+                            <td colspan="3" class="no-data">No Games yet — add your first one!</td>
                         </tr>
                     {% endfor %}
                 </tbody>

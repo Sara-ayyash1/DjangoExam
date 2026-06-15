@@ -542,7 +542,7 @@ td a:hover { text-decoration: underline; }
 }
 
 /* ── 10. DETAIL PAGE ── */
-.model-info,
+.game-info,
 .detail-info {
     flex: 1;
     background: var(--surface);
@@ -552,14 +552,14 @@ td a:hover { text-decoration: underline; }
     box-shadow: var(--shadow-sm);
 }
 
-.model-info p,
+.game-info p,
 .detail-info p {
     margin-bottom: 12px;
     font-size: 0.92rem;
     line-height: 1.6;
 }
 
-.model-info p strong,
+.game-info p strong,
 .detail-info p strong {
     color: var(--text-muted);
     font-size: 0.78rem;
@@ -569,7 +569,7 @@ td a:hover { text-decoration: underline; }
     margin-bottom: 2px;
 }
 
-.model-lovers,
+.game-lovers, 
 .likes-section {
     flex: 1;
     background: var(--surface);
@@ -579,7 +579,7 @@ td a:hover { text-decoration: underline; }
     box-shadow: var(--shadow-sm);
 }
 
-.model-lovers h2,
+.game-lovers h2,
 .likes-section h2 {
     margin-bottom: 15px;
     font-size: 1rem;

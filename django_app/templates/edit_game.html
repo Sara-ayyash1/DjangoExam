@@ -12,14 +12,14 @@
         <div class="header-container">
             <p>Welcome, <strong>{{user.first_name}} {{user.last_name}}</strong>!</p>
             <div class="user-nav">
-                <a href="//dashboard" class="btn-back">Go to </a> | 
+                <a href="/game/dashboard" class="btn-back">Go to Games</a> | 
                 <a href="/logout" class="btn-logout">Logout</a>
             </div>
         </div>
     </header>
 
     <div class="container detail-container">
-        <section class="model-info">
+        <section class="game-info">
             {% if messages %}
             <div class="alert-messages">
                 {% for msg in messages %}
@@ -27,22 +27,32 @@
                 {% endfor %}
             </div>
            {% endif %}
-                <form class="form-group" action="//{{.id}}/update" method="post" class="edit-form">
+                <form class="form-group" action="/game/{{game.id}}/update" method="post" class="edit-form">
                     {% csrf_token %}
                     <input type="hidden" name="user_id" value="{{user.id}}">
                     <label for="name"> Name</label>
-                    <input type="text" name="name" id="name" value="{{.name}}" required>
+                    <input type="text" name="name" id="name" value="{{game.name}}" required>
 
 
                     <label for="release_date">release_date</label>
-                    <input type="date" name="release_date" id="release_date" value="{{.release_date|date:'Y-m-d'}}">
+                    <input type="date" name="release_date" id="release_date" value="{{game.release_date|date:'Y-m-d'}}">
+
+                    <label for="genre">Genre</label>
+                    <select name="genre" id="genre" value="{{game.genre}}">
+                        <option value="Action">Action</option>
+                        <option value="RGP">RGP</option>
+                        <option value="Arcade">Arcade</option>
+                        <option value="Strategy">Strategy</option>
+                        <option value="Tactical shooter">Tactical shooter</option>
+                        <option value="Adventure">Adventure</option>
+                    </select>
 
                     <label for="description">description</label>
-                    <textarea name="description" id="description" >{{.description}}</textarea>               
+                    <textarea name="description" id="description" >{{game.description}}</textarea>               
                     
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-update">Applay</button>
-                        <a href="//{{.id}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Cancel</a>
+                        <a href="/game/{{game.id}}" class="btn btn-delete" >Cancel</a>
                     </div>
                 </form>
         </section>

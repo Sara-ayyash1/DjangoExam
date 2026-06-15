@@ -44,6 +44,22 @@ def logout(request):
 def view_profile(request , user_id):
     if 'user_id' not in request.session:
         return redirect('/')
+    
+    sort = request.GET.get('sort' , 'id')
+    dirc  =  request.GET.get('dir' , 'asc')
+
+    order= f'-{sort}' if dirc == "desc"  else sort
+
     user = User.objects.get(id=user_id)
     loginuser = User.objects.get(id=request.session['user_id'])
-    return render (request , 'profile.html' , context={'user' :user , 'loginuser' :loginuser})
+    
+    next_dirc  = 'asc' if dirc == 'desc' else 'asc'
+    context={
+        'user' :user , 
+        'loginuser' :loginuser,
+        'liked_games':User.objects.get(id=user_id).liked_games.all().order_by(order),
+        'sort' :sort,
+        'next_dirc' :next_dirc,
+    }
+    return render (request , 'profile.html' ,context=context )
+   
